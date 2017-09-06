@@ -10,6 +10,7 @@ import time
 import random
 import importlib
 import csv
+import pdb
 
 class Simulator(object):
     """Simulates agents in a dynamic smartcab environment.
@@ -132,6 +133,7 @@ class Simulator(object):
                 if total_trials > 20: # Must complete minimum 20 training trials
                     if a.learning:
                         if a.epsilon < tolerance: # assumes epsilon decays to 0
+                            pdb.set_trace()
                             testing = True
                             trial = 1
                     else:
