@@ -53,7 +53,7 @@ class LearningAgent(Agent):
             self.alpha = 0.0
         else:
             #self.epsilon -= 0.05
-            self.epsilon = 0.98**self.trail
+            self.epsilon = 1.0/(self.trail**2)
             
             
         return None
@@ -74,7 +74,7 @@ class LearningAgent(Agent):
         # Set 'state' as a tuple of relevant data for the agent        
         
         
-        # waypoint: None, forward, left, right
+        # waypoint: forward, left, right(Only when car arrive the destination, waypoint should be None)
         # light: True, False
         # oncoming: None, forward, left, right
         # left:     None, forward, left, right
@@ -123,8 +123,8 @@ class LearningAgent(Agent):
             which action to take, based on the 'state' the smartcab is in. """
 
         # Set the agent state and default action
-        #self.state = state
-        #self.next_waypoint = self.planner.next_waypoint()
+        self.state = state
+        self.next_waypoint = self.planner.next_waypoint()
 
         ########### 
         ## TO DO ##
@@ -156,8 +156,9 @@ class LearningAgent(Agent):
         # When learning, implement the value iteration update rule
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
         
-        self.Q[self.state][action] = self.Q[self.state][action] + self.alpha*(reward + self.get_maxQ(state) - self.Q[self.state][action])
-        self.state = state
+        self.Q[self.state][action] = self.Q[self.state][action] + self.alpha*(reward - self.Q[self.state][action])
+        #self.Q[self.state][action] = self.Q[self.state][action] + self.alpha*(reward + self.get_maxQ(state) - self.Q[self.state][action])
+        #self.state = state
         
         return
 
@@ -186,7 +187,7 @@ def run():
     #   verbose     - set to True to display additional output from the simulation
     #   num_dummies - discrete number of dummy agents in the environment, default is 100
     #   grid_size   - discrete number of intersections (columns, rows), default is (8, 6)
-    env = Environment(verbose=True)
+    env = Environment(verbose=False)
     
     ##############
     # Create the driving agent
@@ -209,14 +210,14 @@ def run():
     #   display      - set to False to disable the GUI if PyGame is enabled
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
-    sim = Simulator(env, update_delay=0.01, display=False, log_metrics=True, optimized=True)
+    sim = Simulator(env, update_delay=0.0001, display=False, log_metrics=True, optimized=True)
     
     ##############
     # Run the simulator
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(tolerance=0.005, n_test=20)
+    sim.run(tolerance=0.0000005, n_test=50)
 
 
 if __name__ == '__main__':

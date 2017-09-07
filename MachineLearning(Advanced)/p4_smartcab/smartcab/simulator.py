@@ -133,7 +133,7 @@ class Simulator(object):
                 if total_trials > 20: # Must complete minimum 20 training trials
                     if a.learning:
                         if a.epsilon < tolerance: # assumes epsilon decays to 0
-                            pdb.set_trace()
+                            #pdb.set_trace()
                             testing = True
                             trial = 1
                     else:
