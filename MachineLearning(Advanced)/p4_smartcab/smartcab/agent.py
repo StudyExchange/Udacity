@@ -19,7 +19,7 @@ class LearningAgent(Agent):
         self.Q = dict()          # Create a Q-table which will be a dictionary of tuples
         self.epsilon = epsilon   # Random exploration factor
         self.alpha = alpha       # Learning factor
-        
+        self.originalEpsilon = epsilon
         ###########
         ## TO DO ##
         ###########
@@ -47,13 +47,15 @@ class LearningAgent(Agent):
         # If 'testing' is True, set epsilon and alpha to 0
         
         self.trail +=1
+        a = 0.002
         
         if testing:
             self.epsilon = 0.0
             self.alpha = 0.0
         else:
-            #self.epsilon -= 0.05
-            self.epsilon = 1.0/(self.trail**2)
+            self.epsilon = self.originalEpsilon*(1-a*self.trail) # Same to self.epsilon -= a
+            #self.epsilon -= math.e**(-0.9*self.trail)
+            #self.epsilon = 1.0/(self.trail**2)
             
             
         return None
@@ -217,7 +219,7 @@ def run():
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(tolerance=0.0000005, n_test=50)
+    sim.run(tolerance=0.0005, n_test=20)
 
 
 if __name__ == '__main__':
