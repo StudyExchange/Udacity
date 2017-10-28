@@ -5,7 +5,7 @@
 /input/*
 /logs/*
 /model/*
-/output/*.h5
+/output/*
 
 #HTML
 !/model/*.html
