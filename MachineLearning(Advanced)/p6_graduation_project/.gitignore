@@ -3,7 +3,7 @@
 
 #Other folders
 /input/*
-/logs/*
+/log/*
 /model/*
 /output/*
 
