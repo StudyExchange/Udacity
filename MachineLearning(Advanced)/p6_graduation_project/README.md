@@ -1,8 +1,11 @@
 # 优达学城毕业项目——Kaggle：Dog Breed Identification
 
+## 项目来源
+项目来自Kaggle的[Dog Breed Identification](https://www.kaggle.com/c/dog-breed-identification)。
+
 ## 配置软硬件环境
 1. 购买硬件环境
-- 购买ucloud GPU主机G2系列（NVidia P40，8核，16GB内存，Windows 2012 64位 EN）按时付费。整个开发和调试过程会很漫长，而购买的计算机并没有一直在进行我们所需的计算，按时付费（按小时计费）对于个人来说，会比较划算。
+- 购买ucloud GPU主机G2系列（NVidia P40，8核，32GB内存，Windows 2012 64位 EN）按时付费。整个开发和调试过程会很漫长，而购买的计算机并没有一直在进行我们所需的计算，按时付费（按小时计费）对于个人来说，会比较划算。
 - 购买ucloud 云硬盘120GB，按月付费。因为主机是按时付费，一次使用之后会删除主机。而，整个算法所需的原始数据，处理过程的中间数据，以及一些软件安装包等东西每次都重新下载会非常耗费时间——时间就是金钱，用云硬盘用来存储这些数据是一种比较好的方式。
 2. 配置软件环境
 - 安装驱动 
@@ -45,4 +48,15 @@
     - 官网下载相应的安装包，默认安装即可。
 3. 制作镜像
 - 整个的软件环境的安装配置是一个步骤繁多，非常耗时的事情，比如下载exe的安装包和下载conda的安装包，整个过程会消耗几个小时，所以制作一个操作系统镜像。以后，就可以直接从镜像创建主机，几分钟就可以弄好（其实这几分钟也主要是等待主机初始化完成）。
+
+## 开始运行
+**优达学城项目审阅人员注意：程序运行成功的纪录是文件名对应的HTML文件，HTML文件名=ipython文件名+时间字符串。**
+1. 启动Anaconda，进去创建的gpu环境（前面有安装tensorflow_gpu包）。
+2. 预处理数据。将```1. Preprocess-GroupImages.ipynb```文件运行一遍（大概半个小时）。
+3. 提取特征。将```2. Feature_extraction_from_VGG16_to_InceptionV3.ipynb```文件运行一遍（大概一个小时）。
+4. 对特征分类并预测测试集的结果。将```3. Train-Predict```文件运行一遍。
+5. InceptionV3 Fine-tune。将```3. InceptionV3 Fine Tune```文件运行一遍。
+
+## 其他说明
+- 除了GitHub中的代码，项目中用到的数据请到[Dog Breed Identification](https://www.kaggle.com/c/dog-breed-identification)。项目中数据，运行历史等数据并没有提交到GitHub，但是并不影响整个项目正常运行。项目中用的子文件主要有input、log、model和output。
 
