@@ -52,10 +52,10 @@
 ## 开始运行
 **优达学城项目审阅人员注意：程序运行成功的纪录是文件名对应的HTML文件，HTML文件名=ipython文件名+时间字符串。**
 1. 启动Anaconda，进去创建的gpu环境（前面有安装tensorflow_gpu包）。
-2. 预处理数据。将```1. Preprocess-GroupImages.ipynb```文件运行一遍（大概半个小时）。
+2. 预处理数据。将```1. Preprocess-GroupImages.ipynb```文件运行一遍（大概10分钟）。
 3. 提取特征。将```2. Feature_extraction_from_VGG16_to_InceptionV3.ipynb```文件运行一遍（大概一个小时）。
 4. 对特征分类并预测测试集的结果。将```3. Train-Predict```文件运行一遍。
-5. InceptionV3 Fine-tune。将```3. InceptionV3 Fine Tune```文件运行一遍。
+5. InceptionV3 Fine-tune。将```3. InceptionV3 Fine Tune```文件运行一遍（大概一个半小时）。
 
 ## 其他说明
 - 除了GitHub中的代码，项目中用到的数据请到[Dog Breed Identification](https://www.kaggle.com/c/dog-breed-identification)。项目中数据，运行历史等数据并没有提交到GitHub，但是并不影响整个项目正常运行。项目中用的子文件主要有input、log、model和output。
