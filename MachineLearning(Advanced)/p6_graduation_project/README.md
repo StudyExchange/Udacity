@@ -4,34 +4,85 @@
 项目来自Kaggle的[Dog Breed Identification](https://www.kaggle.com/c/dog-breed-identification)。
 
 ## 配置软硬件环境
-1. 购买硬件环境
-- 购买ucloud GPU主机G2系列（NVidia P40，8核，32GB内存，Windows 2012 64位 EN）按时付费。整个开发和调试过程会很漫长，而购买的计算机并没有一直在进行我们所需的计算，按时付费（按小时计费）对于个人来说，会比较划算。
-- 购买ucloud 云硬盘120GB，按月付费。因为主机是按时付费，一次使用之后会删除主机。而，整个算法所需的原始数据，处理过程的中间数据，以及一些软件安装包等东西每次都重新下载会非常耗费时间——时间就是金钱，用云硬盘用来存储这些数据是一种比较好的方式。
-2. 配置软件环境
-- 安装驱动 
-**注意：本次配置环境所用的安装包是一个月之前下载的，所以，提供的安装包的下载链接地址可能会有问题。另外，不同的显卡型号配置，驱动安装包和cnn包会不一样，需要到NVidia官网搜索下载对应的东西才行。配置环境的过程问题会比较多，遇到问题可以多上网搜索一下。**
-    - 安装```vc_redist.x64.exe```。安装包来自于[微软官网](https://www.microsoft.com/en-us/download/details.aspx?id=48145)，。
-    - 安装显卡驱动```win2012_cuda_8.0.61_windows.exe```（1.19GB）。安装包来自于NVidia官网。
-    - 安装显卡驱动补丁```win2012_cuda_8.0.61.2_windows.exe```（42MB）。安装包来自于NVidia官网。
-    - 解压```cudnn-8.0-windows10-x64-v6.0_work_at_win2012.zip```。安装包来自于NVidia官网。然后将解压之后的```cudnn-8.0-windows10-x64-v6.0_work_at_win2012```文件夹下面的，```cuda```文件夹复制到```C```盘根目录。
-    - 添加环境变量。```System variables```框内，```Path```变量，添加```C:\cuda\bin;```（注意环境变量关于分号的格式要求。）。
-    - 验证驱动程序安装正确。Win+R，打开Windows运行窗口，然后输入```devmgmt.msc```打开设备管理器，点开Display adapter，会看到NVidia Tesla P40。
-- 安装Anaconda。
-    - 安装Anaconda3-4.4.0-Windows-x86_64.exe（Python 3.6，64-bit）。安装包来自于[Anaconda官网](https://www.anaconda.com/download/)。
-    - 打开Anaconda终端。
-    - 在Anaconda终端运行以下命令，创建名为```gpu```的conda环境：
+### 购买硬件环境
+1. 购买ucloud GPU主机G2系列（NVidia P40，8核，32GB内存，Windows 2012 64位 EN）按时付费。整个开发和调试过程会很漫长，而购买的计算机并没有一直在进行我们所需的计算，按时付费（按小时计费）对于个人来说，会比较划算。
+2. 购买ucloud 云硬盘120GB，按月付费。因为主机是按时付费，一次使用之后会删除主机。而，整个算法所需的原始数据，处理过程的中间数据，以及一些软件安装包等东西每次都重新下载会非常耗费时间——时间就是金钱，用云硬盘用来存储这些数据是一种比较好的方式。
+### 配置软件环境
+1. 安装驱动
+    - 安装Nvidia驱动。384.66是支持K80的版本。输入以下命令（中途遇到的确认全部选“Accept”， “Yes”， “OK”等积极的词）：
     ```
-    conda create -n gpu python=3.5
+    cd ~
+    sudo yum install -y gcc kernel-devel-`uname -r`
+    wget http://us.download.nvidia.com/XFree86/Linux-x86_64/384.66/NVIDIA-Linux-x86_64-384.66.run
+    sudo /bin/bash ./NVIDIA-Linux-x86_64-384.66.run
     ```
-    - 在Anaconda终端运行以下命令，激活环境```gpu```：
+    - 查看Nvidia驱动安装是否正常。输入命令：```nvidia-smi```，应该返回GPU的信息。
+    - 安装CUDA Repo，输入以下命令：
     ```
-    activate gpu
+    wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda-repo-rhel6-8-0-local-ga2-8.0.61-1.x86_64-rpm
+    sudo rpm -i cuda-repo-rhel6-8-0-local-ga2-8.0.61-1.x86_64-rpm
     ```
-    - 在Anaconda终端运行以下命令，安装tensorflow-gpu包：
+    - 安装CUDA Toolkit，输入以下命令：
+    ```
+    sudo yum install cuda-toolkit-8-0
+    export PATH=$PATH:/usr/local/cuda-8.0/bin
+    ```
+    - 编辑文件```~/.bashrc```。输入命令：```vim ~/.bashrc```，打开vim。按```i```进入编辑模式。在文件最后添加一行：```export PATH=$PATH:/usr/local/cuda-8.0/bin```，文件最终内容如下：
+    ```
+    # .bashrc
+    # Source global definitions
+    if [ -f /etc/bashrc ]; then
+            . /etc/bashrc
+    fi
+
+    # User specific aliases and functions
+    export PATH=$PATH:/usr/local/cuda-8.0/bin
+    ```
+    先按```Esc```，再按```:```（冒号），进入vim编辑器的命令模式。输入```wq!```，保存并退出编辑器。
+    - 执行文件```~/.bashrc```，输入命令：```source ~/.bashrc```。
+    - 查看CUDA Toolkit安装是否正常。输入命令：```nvcc -–version```，应该返回nvcc的版本信息。
+2. 配置cuDNN v6.0 for CUDA 8.0。
+    - 下载并解压。再NVidia官网的cuda下载页面（https://developer.nvidia.com/rdp/cudnn-download），展开“Download cuDNN v6.0 (April 27, 2017), for CUDA 8.0”，下载“cuDNN v6.0 Library for Linux”。输入以下命令：
+    ```
+    wget http://developer2.download.nvidia.com/compute/machine-learning/cudnn/secure/v6/prod/8.0_20170427/cudnn-8.0-linux-x64-v6.0.tgz?nbOPOSFlUAxrj7QGliY4FaYcpWAqOQmrGH5o_MdYJ8FHFAcxqWXmCGsFrA9ZnLuEe7WM956YEMXr6WuqZ0AgA-1eggS2-bAFsl18_JICrUUf2fZv8kTi579hmhRxkh8ggNSbLVETbKuSlajbKJfE93gxpsrLah7XHow1HlpCyyD5smdvjVIA9NW26suqDUjUxCQp50D2
+    mv cudnn-8.0-linux-x64-v6.0.tgz* cudnn-8.0-linux-x64-v6.0.tgz
+    tar -xzvf cudnn-8.0-linux-x64-v6.0.tgz
+    ```
+    - 复制相应的cuDNN v6.0文件到cuda 8.0的安装目录。输入以下命令：
+    ```
+    sudo cp /home/ec2-user/cuda/include/cudnn.h /usr/local/cuda-8.0/include
+    sudo cp /home/ec2-user/cuda/lib64/* /usr/local/cuda-8.0/lib64
+    ```
+    - 建立：
+    ```
+    sudo ldconfig /usr/local/cuda-8.0/lib64/libcudnn.so.6
+    ```
+2. 安装Anaconda
+    - 从官网（https://www.anaconda.com/download/#linux）下载安装包，输入以下命令（因为版本一直在更新，请根据实际的下载链接下载对应的安装包）：
+    ```
+    wget https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh
+    ```
+    - 根据官方安装指南（https://docs.anaconda.com/anaconda/install/linux） 安装Anaconda。注意：第二步，因为安装包是下载到根目录的，所以安装命令为：```bash Anaconda3-5.0.1-Linux-x86_64.sh```，另外，不要再命令前面加```sudo```，加```sudo```会导致anaconda被安装到admin管理员的根目录下，而不是当前user的根目录（/home/ec2-user）。第七步，推荐选“YES”。第九步，执行命令```source ~/.bashrc```，而不是关闭控制台连接。
+    - 查看Anaconda安装是否正常。输入命令：```conda -–version```，应该返回conda的版本信息。
+    
+- 安装tensorflow-gpu
+    - 输入以下命令，创建名为```python35```的conda环境（python3.6兼容有点问题，每次运行都会报warning）：
+    ```
+    conda create -n python35 python=3.5
+    ```
+    - 输入以下命令，激活环境```python35```：
+    ```
+    source activate python35
+    ```
+    - 检查python版本是3.5。输入以下命令：
+    ```
+    python --version
+    ```
+    - 输入以下命令，安装tensorflow-gpu包：
     ```
     conda install tensorflow-gpu
     ```
-    - 验证tensorflow-gpu包安装正确和整个的硬件环境配置正确。在Anaconda终端运行以下命令：```python```，然后在这个python环境下依次运行以下python程序，确认能够正常输出“Hello World！”：**（验证这个步骤非常重要。）**
+    - 验证tensorflow-gpu包安装正确和整个的硬件环境配置正确。输入以下命令：```python```，然后在这个python环境下依次运行以下python程序，确认能够正常输出“Hello World！”：**（验证这个步骤非常重要。）**
     ```
     import tensorflow as tf
     hello_constant = tf.constant('Hello World!')
@@ -39,11 +90,7 @@
         output = sess.run(hello_constant)
         print(output)
     ```
-    - 在Anaconda终端运行以下命令，安装其他会用到的包：
-    ```
-    conda install pandas matplotlib jupyter notebook scipy scikit-learn seaborn h5py
-    pip install pickleshare Pillow keras tqdm opencv-python
-    ```
+    
 - 安装常用软件：Firefox，git客户端，VS Code。
     - 官网下载相应的安装包，默认安装即可。
 3. 制作镜像
