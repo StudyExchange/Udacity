@@ -40,11 +40,11 @@
     ```
     先按```Esc```，再按```:```（冒号），进入vim编辑器的命令模式。输入```wq!```，保存并退出编辑器。
     - 执行文件```~/.bashrc```，输入命令：```source ~/.bashrc```。
-    - 查看CUDA Toolkit安装是否正常。输入命令：```nvcc -–version```，应该返回nvcc的版本信息。
+    - 查看CUDA Toolkit安装是否正常。输入命令：```nvcc -–version```（直接复制粘贴到Linux控制台会有问题，建议手动输入这个命令），应该返回nvcc的版本信息。
 2. 配置cuDNN v6.0 for CUDA 8.0。
-    - 下载并解压。再NVidia官网的cuda下载页面（https://developer.nvidia.com/rdp/cudnn-download），展开“Download cuDNN v6.0 (April 27, 2017), for CUDA 8.0”，下载“cuDNN v6.0 Library for Linux”。输入以下命令：
+    - 下载并解压。注册NVidia官网(https://developer.nvidia.com/)，然后到cuda下载页面(https://developer.nvidia.com/rdp/cudnn-download)，展开“Download cuDNN v6.0 (April 27, 2017), for CUDA 8.0”，下载“cuDNN v6.0 Library for Linux”。在浏览器开始下载之后，复制浏览器里面下载项的地址（下载连接后面会有常常的一串token，这个token会过期，所以本文中的连接复制粘贴到Linux控制台使用），输入以下命令：
     ```
-    wget http://developer2.download.nvidia.com/compute/machine-learning/cudnn/secure/v6/prod/8.0_20170427/cudnn-8.0-linux-x64-v6.0.tgz?nbOPOSFlUAxrj7QGliY4FaYcpWAqOQmrGH5o_MdYJ8FHFAcxqWXmCGsFrA9ZnLuEe7WM956YEMXr6WuqZ0AgA-1eggS2-bAFsl18_JICrUUf2fZv8kTi579hmhRxkh8ggNSbLVETbKuSlajbKJfE93gxpsrLah7XHow1HlpCyyD5smdvjVIA9NW26suqDUjUxCQp50D2
+    wget http://developer2.download.nvidia.com/compute/machine-learning/cudnn/secure/v6/prod/8.0_20170427/cudnn-8.0-linux-x64-v6.0.tgz?uNqk6x1lq601bxnQ1sKzoOtcOTRMBtneEU7XIYR8oE9VoCAocU-Cvb8_l_l6HLTT4EfEdJSUSr8hBUk-iHU8irrF8oNXfQnCSTvhi2ahZpMKSHAfRWbhV-hZa2IHwHVs3jEHstpbo5--SLR1KGv8Lr4-TO9vibwTUPhmdROrtydW__57jGmtye7rMXZ_1eannPxStg9G
     mv cudnn-8.0-linux-x64-v6.0.tgz* cudnn-8.0-linux-x64-v6.0.tgz
     tar -xzvf cudnn-8.0-linux-x64-v6.0.tgz
     ```
@@ -53,19 +53,16 @@
     sudo cp /home/ec2-user/cuda/include/cudnn.h /usr/local/cuda-8.0/include
     sudo cp /home/ec2-user/cuda/lib64/* /usr/local/cuda-8.0/lib64
     ```
-    - 建立：
-    ```
-    sudo ldconfig /usr/local/cuda-8.0/lib64/libcudnn.so.6
-    ```
-2. 安装Anaconda
-    - 从官网（https://www.anaconda.com/download/#linux）下载安装包，输入以下命令（因为版本一直在更新，请根据实际的下载链接下载对应的安装包）：
+
+3. 安装Anaconda
+    - 从官网(https://www.anaconda.com/download/#linux)下载安装包，输入以下命令（因为版本一直在更新，请根据实际的下载链接下载对应的安装包）：
     ```
     wget https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh
     ```
-    - 根据官方安装指南（https://docs.anaconda.com/anaconda/install/linux） 安装Anaconda。注意：第二步，因为安装包是下载到根目录的，所以安装命令为：```bash Anaconda3-5.0.1-Linux-x86_64.sh```，另外，不要再命令前面加```sudo```，加```sudo```会导致anaconda被安装到admin管理员的根目录下，而不是当前user的根目录（/home/ec2-user）。第七步，推荐选“YES”。第九步，执行命令```source ~/.bashrc```，而不是关闭控制台连接。
-    - 查看Anaconda安装是否正常。输入命令：```conda -–version```，应该返回conda的版本信息。
-    
-- 安装tensorflow-gpu
+    - 根据官方安装指南(https://docs.anaconda.com/anaconda/install/linux)安装Anaconda。注意：第二步，因为安装包是下载到根目录的，所以安装命令为：```bash Anaconda3-5.0.1-Linux-x86_64.sh```，另外，不要在命令前面加```sudo```，加```sudo```会导致anaconda被安装到admin管理员的根目录下，而不是当前user的根目录（/home/ec2-user）。第七步，推荐选“YES”。第九步，执行命令```source ~/.bashrc```，而不是关闭控制台连接。
+    - 查看Anaconda安装是否正常。输入命令：```conda --version```（直接复制粘贴到Linux控制台会有问题，建议手动输入这个命令），应该返回conda的版本信息。
+
+4. 安装tensorflow-gpu
     - 输入以下命令，创建名为```python35```的conda环境（python3.6兼容有点问题，每次运行都会报warning）：
     ```
     conda create -n python35 python=3.5
@@ -90,11 +87,48 @@
         output = sess.run(hello_constant)
         print(output)
     ```
-    
-- 安装常用软件：Firefox，git客户端，VS Code。
-    - 官网下载相应的安装包，默认安装即可。
-3. 制作镜像
-- 整个的软件环境的安装配置是一个步骤繁多，非常耗时的事情，比如下载exe的安装包和下载conda的安装包，整个过程会消耗几个小时，所以制作一个操作系统镜像。以后，就可以直接从镜像创建主机，几分钟就可以弄好（其实这几分钟也主要是等待主机初始化完成）。
+    - 退出python35环境，输入以下命令：
+    ```
+    source deactivate
+    ```
+
+5. 删除多余的安装包
+    - 删除除文件夹```anaconda3```外的其他的安装包文件。因为文件夹```anaconda3```是前面安装anaconda的时候创建的。输入以下命令：
+    ```
+    shopt -s extglob
+    rm -fr !(anaconda3)
+    ```
+
+6. 安装其他的重要的包
+    - 安装Linux环境下一些常用的包：
+    ```
+    sudo yum install git
+    ```
+    - 安装conda下一些常用的包：
+    ```
+    source activate python35
+    pip install keras jupyter notebook
+    ```
+
+7. 安装和配置远程访问jupyter notebook
+    参考jupyter官网(http://jupyter-notebook.readthedocs.io/en/latest/public_server.html)，简要的配置如下：
+    - 生成文件```jupyter_notebook_config.py```（文件在用户主目录下的文件夹：```~/.jupyter```）。输入以下命令：
+    ```
+    source activate python35
+    jupyter notebook --generate-config
+    ```
+    - 设置登陆密码，输入以下命令，并填写密码：
+    ```
+    jupyter notebook password
+    ```
+    - 启动jupyter notebook，输入以下命令：
+    ```
+    jupyter notebook --ip=0.0.0.0
+    ```
+    - 在自己本地的Windows电脑上用浏览器打开连接(http://your_server_ip:8888)（your_server_ip是实际的服务器地址），并填写前面设置的密码。
+
+8. 制作镜像
+    - 整个的软件环境的安装配置是一个步骤繁多，耗时巨大的事情，所以制作一个操作系统镜像。以后，就可以直接从镜像创建主机，几分钟就可以弄好（其实这几分钟也主要是等待主机初始化完成）。
 
 ## 开始运行
 **优达学城项目审阅人员注意：程序运行成功的纪录是文件名对应的HTML文件，HTML文件名=ipython文件名+时间字符串。**
@@ -106,4 +140,10 @@
 
 ## 其他说明
 - 除了GitHub中的代码，项目中用到的数据请到[Dog Breed Identification](https://www.kaggle.com/c/dog-breed-identification)。项目中数据，运行历史等数据并没有提交到GitHub，但是并不影响整个项目正常运行。项目中用的子文件主要有input、log、model和output。
+
+## 参考文献
+1. http://www.qyjohn.net/?p=4291
+2. https://docs.anaconda.com/anaconda/install/linux
+3. https://developer.nvidia.com/rdp/cudnn-download
+4. http://jupyter-notebook.readthedocs.io/en/latest/public_server.html
 
