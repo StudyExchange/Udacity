@@ -99,22 +99,12 @@
     rm -fr !(anaconda3)
     ```
 
-6. 安装其他的重要的包
-    - 安装Linux环境下一些常用的包：
-    ```
-    sudo yum install git
-    ```
-    - 安装conda下一些常用的包：
-    ```
-    source activate python35
-    pip install keras jupyter notebook
-    ```
-
-7. 安装和配置远程访问jupyter notebook
+6. 安装和配置远程访问jupyter notebook
     参考jupyter官网[http://jupyter-notebook.readthedocs.io/en/latest/public_server.html](http://jupyter-notebook.readthedocs.io/en/latest/public_server.html)，简要的配置如下：
     - 生成文件```jupyter_notebook_config.py```（文件在用户主目录下的文件夹：```~/.jupyter```）。输入以下命令：
     ```
     source activate python35
+    pip install jupyter notebook
     jupyter notebook --generate-config
     ```
     - 设置登陆密码，输入以下命令，并填写密码：
@@ -126,6 +116,18 @@
     jupyter notebook --ip=0.0.0.0
     ```
     - 在自己本地的Windows电脑上用浏览器打开连接http://your_server_ip:8888（your_server_ip是实际的服务器地址），并填写前面设置的密码。
+
+7. Linux下，磁盘挂载方法，参考：http://blog.csdn.net/zqixiao_09/article/details/51417432
+
+8. Linux下，下载Kaggle数据，
+    - 安装kaggle-cli，参考：1. [https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/discussion/27054], 2. [https://github.com/floydwch/kaggle-cli]。
+    ```
+    pip install kaggle-cli
+    ```
+    - 下载。kaggle-cli的```-c```参数（项目名）是项目主页面中URL参数里面所用的项目名，即URL的最后一项，如[https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition)：
+    ```
+    kg download -u USERNAME -p PASSWORD -c dogs-vs-cats-redux-kernels-edition
+    ```
 
 8. 制作镜像
     - 整个的软件环境的安装配置是一个步骤繁多，耗时巨大的事情，所以制作一个操作系统镜像。以后，就可以直接从镜像创建主机，几分钟就可以弄好（其实这几分钟也主要是等待主机初始化完成）。
