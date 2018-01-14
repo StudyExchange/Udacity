@@ -10,7 +10,7 @@
 ### 配置软件环境
 1. 首先更新系统，然后，切换到管理员权限。输入以下命令：
     ```
-    sudo yum update
+    sudo yum update -y
     sudo su root
     ```
 2. 安装驱动，参考：[http://www.qyjohn.net/?p=4291](http://www.qyjohn.net/?p=4291)
@@ -18,7 +18,7 @@
     ```
     cd ~
     sudo yum install -y gcc kernel-devel-`uname -r`
-    sudo yum install dkms
+    sudo yum install -y dkms
     wget http://us.download.nvidia.com/XFree86/Linux-x86_64/384.66/NVIDIA-Linux-x86_64-384.66.run
     sudo /bin/bash ./NVIDIA-Linux-x86_64-384.66.run --dkms -s
     ```
@@ -30,7 +30,7 @@
     ```
     - 安装CUDA Toolkit，输入以下命令：
     ```
-    sudo yum install cuda-toolkit-8-0
+    sudo yum install -y cuda-toolkit-8-0
     ```
     - 编辑文件```~/.bashrc```。输入命令：```vim ~/.bashrc```，打开vim。按```i```进入编辑模式。在文件最后添加一行：```export PATH=$PATH:/usr/local/cuda-8.0/bin```，文件最终内容如下：
     ```
@@ -73,7 +73,7 @@
 5. 安装tensorflow-gpu
     - 输入以下命令，创建名为```python35```的conda环境（python3.6兼容有点问题，每次运行都会报warning）：
     ```
-    conda create -n python35 python=3.5
+    conda create -y -n python35 python=3.5
     ```
     - 输入以下命令，激活环境```python35```：
     ```
@@ -85,7 +85,7 @@
     ```
     - 输入以下命令，安装tensorflow-gpu包：
     ```
-    conda install tensorflow-gpu
+    conda install -y tensorflow-gpu
     ```
     - 验证tensorflow-gpu包安装正确和整个的硬件环境配置正确。输入以下命令：```python```，然后在这个python环境下输入以下python程序，确认能够正常输出“Hello World！”**（验证这个步骤非常重要）**。
     ```
@@ -191,7 +191,7 @@
     ```
 11. 安装git：
     ```
-    sudo yum install git
+    sudo yum install -y git
     ```
 
 12. 安装7zzip。
