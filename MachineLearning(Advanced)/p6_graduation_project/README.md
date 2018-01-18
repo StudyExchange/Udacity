@@ -146,7 +146,7 @@
     ```
     sudo fdisk -l
     ```
-    - 对磁盘进行分区，我另外的那哥磁盘是```/dev/xvdf```，输入命令：```sudo fdisk /dev/xvdf```，然后，选择分区：
+    - 对磁盘进行分区，我另外的那个磁盘是```/dev/xvdf```，输入命令：```sudo fdisk /dev/xvdf```，然后，选择分区：
     ```
     [ec2-user@ip-172-31-8-99 ~]$ sudo fdisk /dev/xvdf
     Welcome to fdisk (util-linux 2.23.2).
