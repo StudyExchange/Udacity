@@ -3,6 +3,11 @@
 ## 项目来源
 项目来自Kaggle的[Dog Breed Identification](https://www.kaggle.com/c/dog-breed-identification)。
 
+
+20180221 stanford yolo
+20180222 original yolo
+20180223 original
+
 ## 配置软硬件环境
 ### 购买硬件环境
 1. 购买ucloud GPU主机G2系列（NVidia P40，8核，32GB内存，Windows 2012 64位 EN）按时付费。整个开发和调试过程会很漫长，而购买的计算机并没有一直在进行我们所需的计算，按时付费（按小时计费）对于个人来说，会比较划算。
