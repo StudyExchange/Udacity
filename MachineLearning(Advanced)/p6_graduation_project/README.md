@@ -7,7 +7,7 @@
 **优达学城项目审阅人员注意：程序运行成功的纪录是文件名对应的HTML文件，HTML文件名=ipython文件名+时间字符串。**
 1. 启动Anaconda，进去创建的gpu环境（前面有安装tensorflow_gpu包）。
 2. 预处理数据。将```1. Preprocess-GroupImages.ipynb```文件运行一遍（大概10分钟）。
-3. 预处理数据。从Darknet官方下载model，然后，将 Darknet YOLO_v2 model转换为Keras model（参考https://www.jianshu.com/p/3e77cefeb49b）。在YOLO源代码目录YAD2K下，运行我自己写的保存狗所在区域图片的代码：```process_dog.py```。
+3. 预处理数据。从Darknet官方下载model，然后，将 Darknet YOLO_v2 model转换为Keras model（[参考在Python 3中使用YOLOv2](https://www.jianshu.com/p/3e77cefeb49b)）。在YOLO源代码目录YAD2K下，运行我自己写的保存狗所在区域图片的代码：```process_dog.py```。
 4. 对data_train、data_val和data_test提取特征。将```2. 特征提取_从VGG16到InceptionResNetV2.ipynb```文件运行一遍（大概6个小时）。
 5. 对特征分类并预测测试集的结果。将```3. Train-Predict```文件运行一遍（大概8.5个小时）。运行结果保存的HTML文件为```Dog_Breed_Identification_Train-Predict_20180222_211320_3860.html```。
 6. 对yolo_data_train、yolo_data_val和yolo_data_test提取特征。将```2. 特征提取_从VGG16到InceptionResNetV2.ipynb```文件运行一遍（大概6个小时）。
