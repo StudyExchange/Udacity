@@ -9,6 +9,7 @@ The practise projects of Udacity
     - [p3_creating_customer_segments](https://github.com/StudyExchange/Udacity/tree/master/MachineLearning(Advanced)/p3_creating_customer_segments)
     - [p4_smartcab](https://github.com/StudyExchange/Udacity/tree/master/MachineLearning(Advanced)/p4_smartcab)
     - [p5_image_classification](https://github.com/StudyExchange/Udacity/tree/master/MachineLearning(Advanced)/p5_image_classification)
+    - [p6_graduation_project](https://github.com/StudyExchange/Udacity/tree/master/MachineLearning(Advanced)/p6_graduation_project)
 
 # References
 1. Machine learning(Advanced)
@@ -18,3 +19,4 @@ The practise projects of Udacity
     - [p3_creating_customer_segments](https://github.com/nd009/creating_customer_segments)
     - [p4_smartcab](https://github.com/nd009/smartcab)
     - [p5_image_classification](https://github.com/nd009/image_classification)
+    - [p6_graduation_project](https://www.kaggle.com/c/dog-breed-identification)
