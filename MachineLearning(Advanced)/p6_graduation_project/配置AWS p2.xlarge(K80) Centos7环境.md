@@ -91,7 +91,7 @@
 
 6. 安装其他常用的conda的包，输入命令：
     ```
-    pip install pandas seaborn scikit-learn scikit-image keras opencv-python h5py keras
+    pip install pandas seaborn scikit-learn scikit-image opencv-python h5py keras
     ```
 
 7. Linux下，下载Kaggle数据，安装kaggle-cli

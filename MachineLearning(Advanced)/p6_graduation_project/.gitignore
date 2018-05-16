@@ -1,12 +1,17 @@
 #Ipython Notebook
 .ipynb_checkpoints
+# nohup log file
+nohup.out
 
 #Other folders
 /input/*
-/log/*
-/model/*
 /output/*
+/model/*
+/log/*
+/feature/*
+/post_pca_feature/*
+
 
 #HTML
 !/model/*.html
-!/model/*.csv
+
